@@ -1,0 +1,20 @@
+# OS / editor
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# Office lock files (OneDrive)
+~$*
+
+# Environment
+.env
+.env.*
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Node
+node_modules/
