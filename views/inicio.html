@@ -1,0 +1,162 @@
+{% extends "base.html" %}
+
+{% block titulo %}Inicio · Control de pólizas{% endblock %}
+
+{% block contenido %}
+
+<!-- ============================================================
+     Tarjetas con los 3 contadores
+     ============================================================ -->
+<section class="tarjetas" aria-label="Resumen por estado">
+
+    <article class="tarjeta tarjeta-vigente">
+        <p class="tarjeta-numero">{{ conteo.get('Vigente', 0) }}</p>
+        <p class="tarjeta-etiqueta">Vigentes</p>
+    </article>
+
+    <article class="tarjeta tarjeta-por-vencer">
+        <p class="tarjeta-numero">{{ conteo.get('Por vencer', 0) }}</p>
+        <p class="tarjeta-etiqueta">Por vencer</p>
+    </article>
+
+    <article class="tarjeta tarjeta-vencida">
+        <p class="tarjeta-numero">{{ conteo.get('Vencida', 0) }}</p>
+        <p class="tarjeta-etiqueta">Vencidas</p>
+    </article>
+
+</section>
+
+<!-- Botón para descargar todos los avisos -->
+<div class="acciones">
+    <a class="boton" href="{{ url_for('polizas.descargar_avisos') }}">
+        Descargar todos los avisos (.zip)
+    </a>
+</div>
+
+<!-- ============================================================
+     Paneles: primas e inconsistencias
+     ============================================================ -->
+<section class="paneles">
+
+    <article class="panel">
+        <h2>Primas por aseguradora</h2>
+
+        {% if primas %}
+            <ul class="lista-primas">
+                {% for aseguradora, total in primas.items() %}
+                    <li>
+                        <span>{{ aseguradora }}</span>
+                        <strong>CRC {{ "{:,.2f}".format(total) }}</strong>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="vacio">No hay primas registradas.</p>
+        {% endif %}
+    </article>
+
+    <article class="panel">
+        <h2>Inconsistencias</h2>
+
+        {% if inconsistencias %}
+            <ul class="lista-inconsistencias">
+                {% for problema in inconsistencias %}
+                    <li>{{ problema }}</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="vacio">Sin inconsistencias.</p>
+        {% endif %}
+    </article>
+
+</section>
+
+<!-- ============================================================
+     Tabla de pólizas
+     ============================================================ -->
+<section class="panel">
+    <h2>Pólizas</h2>
+
+    <div class="tabla-contenedor">
+        <table class="tabla-polizas">
+            <thead>
+                <tr>
+                    <th>Póliza</th>
+                    <th>Asegurado</th>
+                    <th>Cédula</th>
+                    <th>Aseguradora</th>
+                    <th>Ramo</th>
+                    <th>Vence</th>
+                    <th>Días</th>
+                    <th>Prima anual</th>
+                    <th>Estado</th>
+                    <th>Aviso</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for poliza in resultados %}
+                    <tr class="{% if poliza.estado == 'Vencida' %}fila-vencida{% elif poliza.estado == 'Por vencer' %}fila-por-vencer{% endif %}">
+                        <td class="celda-numero">{{ poliza.numero }}</td>
+
+                        <td>
+                            {{ poliza.nombre }}
+                            {% if not poliza.en_maestro %}
+                                <span class="etiqueta">no está en el maestro</span>
+                            {% endif %}
+                        </td>
+
+                        <td>{{ poliza.cedula }}</td>
+                        <td>{{ poliza.aseguradora }}</td>
+                        <td>{{ poliza.ramo }}</td>
+
+                        <td>
+                            {% if poliza.hasta %}
+                                {{ poliza.hasta.strftime('%d/%m/%Y') }}
+                            {% else %}
+                                Sin fecha
+                            {% endif %}
+                        </td>
+
+                        <td class="celda-dias">
+                            {% if poliza.dias_para_vencer is not none %}
+                                {{ poliza.dias_para_vencer }}
+                            {% else %}
+                                —
+                            {% endif %}
+                        </td>
+
+                        <td class="celda-prima">
+                            {% if poliza.prima is none %}
+                                <span class="etiqueta">sin prima</span>
+                            {% else %}
+                                CRC {{ "{:,.2f}".format(poliza.prima) }}
+                            {% endif %}
+                        </td>
+
+                        <td>
+                            <span class="estado estado-{{ poliza.estado|lower|replace(' ', '-') }}">
+                                {{ poliza.estado }}
+                            </span>
+                        </td>
+
+                        <td>
+                            {% if poliza.estado in ('Por vencer', 'Vencida') %}
+                                <!-- Se abre en otra pestaña -->
+                                <a class="enlace-aviso"
+                                   href="{{ url_for('polizas.aviso', numero=poliza.numero) }}"
+                                   target="_blank"
+                                   rel="noopener">
+                                    Ver aviso
+                                </a>
+                            {% else %}
+                                —
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+
+{% endblock %}

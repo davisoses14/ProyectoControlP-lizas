@@ -1,0 +1,421 @@
+/* ============================================================
+   Colores y medidas generales
+   ============================================================ */
+:root {
+    --azul: #10457E;
+    --azul-oscuro: #0B2F57;
+    --negro: #201E1D;
+    --gris-claro: #F3F2F2;
+    --blanco: #FFFFFF;
+    --gris-borde: #DDD9D6;
+    --gris-texto: #5F5B59;
+
+    --verde: #1E7B4F;
+    --verde-fondo: #E7F4EC;
+    --ambar: #A96A00;
+    --ambar-fondo: #FFF4DB;
+    --azul-fondo: #E3ECF7;
+    --azul-suave: #D3E1F2;
+    --azul-borde: #BFD3EA;
+
+    --sombra: 0 1px 3px rgba(32, 30, 29, 0.08);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: var(--gris-claro);
+    color: var(--negro);
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    line-height: 1.5;
+}
+
+.contenedor {
+    width: 100%;
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* ============================================================
+   Cabecera
+   ============================================================ */
+.cabecera {
+    background: var(--azul);
+    color: var(--blanco);
+    border-bottom: 4px solid var(--negro);
+}
+
+.cabecera-contenido {
+    padding-top: 22px;
+    padding-bottom: 22px;
+}
+
+.cabecera h1 {
+    margin: 0;
+    font-size: 1.5rem;
+    letter-spacing: 0.2px;
+}
+
+.cabecera-subtitulo {
+    margin: 4px 0 0;
+    font-size: 0.95rem;
+    opacity: 0.92;
+}
+
+/* ============================================================
+   Contenido principal
+   ============================================================ */
+main.contenedor {
+    padding-top: 28px;
+    padding-bottom: 40px;
+}
+
+/* Tarjetas de contadores */
+.tarjetas {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.tarjeta {
+    background: var(--blanco);
+    border: 1px solid var(--gris-borde);
+    border-top: 5px solid var(--negro);
+    border-radius: 10px;
+    padding: 18px 20px;
+    box-shadow: var(--sombra);
+}
+
+.tarjeta-numero {
+    margin: 0;
+    font-size: 2.4rem;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.tarjeta-etiqueta {
+    margin: 6px 0 0;
+    font-weight: 600;
+}
+
+.tarjeta-vigente {
+    border-top-color: var(--verde);
+}
+
+.tarjeta-vigente .tarjeta-numero {
+    color: var(--verde);
+}
+
+.tarjeta-por-vencer {
+    border-top-color: var(--ambar);
+}
+
+.tarjeta-por-vencer .tarjeta-numero {
+    color: var(--ambar);
+}
+
+.tarjeta-vencida {
+    border-top-color: var(--azul-oscuro);
+}
+
+.tarjeta-vencida .tarjeta-numero {
+    color: var(--azul-oscuro);
+}
+
+/* Botón de descarga */
+.acciones {
+    margin-bottom: 24px;
+}
+
+.boton {
+    display: inline-block;
+    padding: 12px 20px;
+    border: 2px solid var(--azul);
+    border-radius: 8px;
+    background: var(--azul);
+    color: var(--blanco);
+    font-weight: 600;
+    text-decoration: none;
+    transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.boton:hover,
+.boton:focus {
+    background: var(--azul-oscuro);
+    border-color: var(--azul-oscuro);
+}
+
+.boton:focus-visible,
+.enlace-aviso:focus-visible {
+    outline: 3px solid var(--negro);
+    outline-offset: 2px;
+}
+
+/* Paneles */
+.paneles {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.panel {
+    margin-bottom: 24px;
+    padding: 18px 20px;
+    background: var(--blanco);
+    border: 1px solid var(--gris-borde);
+    border-radius: 10px;
+    box-shadow: var(--sombra);
+}
+
+.panel h2 {
+    margin: 0 0 12px;
+    padding-left: 10px;
+    border-left: 4px solid var(--azul);
+    font-size: 1.1rem;
+}
+
+/* Lista de primas */
+.lista-primas,
+.lista-inconsistencias {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.lista-primas li {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--gris-borde);
+}
+
+.lista-primas li:last-child {
+    border-bottom: none;
+}
+
+.lista-primas strong {
+    color: var(--azul);
+    white-space: nowrap;
+}
+
+/* Lista de inconsistencias */
+.lista-inconsistencias li {
+    position: relative;
+    padding: 8px 0 8px 18px;
+    border-bottom: 1px solid var(--gris-borde);
+}
+
+.lista-inconsistencias li:last-child {
+    border-bottom: none;
+}
+
+.lista-inconsistencias li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 15px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--azul);
+}
+
+.vacio {
+    margin: 0;
+    color: var(--gris-texto);
+}
+
+/* ============================================================
+   Tabla de pólizas
+   ============================================================ */
+.tabla-contenedor {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border: 1px solid var(--gris-borde);
+    border-radius: 8px;
+}
+
+.tabla-polizas {
+    width: 100%;
+    min-width: 1000px;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+}
+
+.tabla-polizas th {
+    padding: 10px 12px;
+    background: var(--negro);
+    color: var(--blanco);
+    font-size: 0.78rem;
+    letter-spacing: 0.03em;
+    text-align: left;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.tabla-polizas td {
+    padding: 10px 12px;
+    border-top: 1px solid var(--gris-borde);
+    vertical-align: top;
+}
+
+/* Filas según el estado */
+.fila-vencida td {
+    background: var(--azul-suave);
+}
+
+.fila-por-vencer td {
+    background: var(--ambar-fondo);
+}
+
+.celda-numero {
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.celda-dias {
+    text-align: right;
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+}
+
+.celda-prima {
+    white-space: nowrap;
+}
+
+/* Etiquetas de estado */
+.estado {
+    display: inline-block;
+    padding: 3px 9px;
+    border: 1px solid transparent;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.estado-vigente {
+    background: var(--verde-fondo);
+    border-color: #B7DCC6;
+    color: var(--verde);
+}
+
+.estado-por-vencer {
+    background: var(--ambar-fondo);
+    border-color: #EBCF94;
+    color: var(--ambar);
+}
+
+.estado-vencida {
+    background: var(--azul-fondo);
+    border-color: var(--azul-borde);
+    color: var(--azul-oscuro);
+}
+
+.estado-sin-fecha {
+    background: var(--gris-claro);
+    border-color: var(--gris-borde);
+    color: var(--gris-texto);
+}
+
+/* Etiquetas de advertencia (no está en el maestro / sin prima) */
+.etiqueta {
+    display: inline-block;
+    margin-left: 6px;
+    padding: 2px 7px;
+    border: 1px solid var(--azul-borde);
+    border-radius: 4px;
+    background: var(--azul-fondo);
+    color: var(--azul);
+    font-size: 0.72rem;
+    font-weight: 700;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+/* Enlace para ver el aviso */
+.enlace-aviso {
+    color: var(--azul);
+    font-weight: 700;
+    text-decoration: none;
+    border-bottom: 1px solid currentColor;
+    white-space: nowrap;
+}
+
+.enlace-aviso:hover {
+    color: var(--azul-oscuro);
+}
+
+/* ============================================================
+   Pie de página
+   ============================================================ */
+.pie {
+    padding: 16px 0;
+    background: var(--blanco);
+    border-top: 3px solid var(--negro);
+    color: var(--gris-texto);
+    font-size: 0.85rem;
+    text-align: center;
+}
+
+/* ============================================================
+   Celular y pantallas pequeñas
+   ============================================================ */
+@media (max-width: 820px) {
+    .tarjetas {
+        grid-template-columns: 1fr;
+    }
+
+    .paneles {
+        grid-template-columns: 1fr;
+    }
+
+    .tarjeta {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 12px;
+    }
+
+    .tarjeta-numero {
+        font-size: 2rem;
+    }
+
+    .tarjeta-etiqueta {
+        margin: 0;
+    }
+}
+
+@media (max-width: 520px) {
+    .contenedor {
+        padding: 0 14px;
+    }
+
+    .cabecera h1 {
+        font-size: 1.2rem;
+    }
+
+    .cabecera-subtitulo {
+        font-size: 0.85rem;
+    }
+
+    .boton {
+        display: block;
+        text-align: center;
+    }
+
+    .panel {
+        padding: 14px;
+    }
+
+    .tabla-polizas {
+        min-width: 900px;
+        font-size: 0.85rem;
+    }
+}

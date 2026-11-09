@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block titulo %}Control de pólizas{% endblock %}</title>
+    <!-- Ladrillo: enlace al CSS usando la ruta estática de Flask. -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='estilos.css') }}">
+</head>
+<body>
+
+    <!-- Cabecera azul con borde negro abajo -->
+    <header class="cabecera">
+        <div class="contenedor cabecera-contenido">
+            <h1>Corredora de Seguros Horizonte</h1>
+            <p class="cabecera-subtitulo">
+                Control de pólizas · Fecha de corte {{ fecha_corte.strftime('%d/%m/%Y') }}
+            </p>
+        </div>
+    </header>
+
+    <!-- Aquí cada vista inserta su contenido -->
+    <main class="contenedor">
+        {% block contenido %}{% endblock %}
+    </main>
+
+    <footer class="pie">
+        <div class="contenedor">
+            Universidad Fundepos · Técnico en IA Empresarial · Módulo 2 · Datos ficticios
+        </div>
+    </footer>
+
+</body>
+</html>

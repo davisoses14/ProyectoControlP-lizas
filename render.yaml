@@ -1,0 +1,35 @@
+# ============================================================
+# Configuración de Render para "control-polizas".
+#
+# Ladrillo: este archivo se llama "Blueprint". Render lo lee
+# y crea el servicio web automáticamente, sin llenar el panel
+# a mano.
+#
+# Cómo se usa: en Render -> New -> Blueprint -> eliges el
+# repositorio de GitHub -> Apply.
+# ============================================================
+services:
+  - type: web
+    name: control-polizas
+    runtime: python
+    plan: free
+    region: oregon
+    branch: main
+
+    # Ladrillo: buildCommand instala las librerías.
+    # Render usa pip; el archivo requirements.txt lo genera
+    # "uv export" desde pyproject.toml/uv.lock.
+    buildCommand: pip install --upgrade pip && pip install -r requirements.txt
+
+    # Ladrillo: startCommand enciende la app con gunicorn
+    # (servidor de producción, no el servidor de desarrollo).
+    # $PORT es el puerto que Render asigna a cada servicio.
+    startCommand: gunicorn app:app --bind 0.0.0.0:$PORT --workers 1 --threads 4 --timeout 120
+
+    # Render revisa esta ruta para saber si la app está viva.
+    healthCheckPath: /
+
+    envVars:
+      # Ladrillo: variable de entorno. Fija la versión de Python.
+      - key: PYTHON_VERSION
+        value: 3.12.16
